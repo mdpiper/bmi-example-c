@@ -3,7 +3,7 @@ name: conda-cmake-build
 on: [push, pull_request]
 
 jobs:
-  build-and-test:
+  build-linux-and-macos:
     runs-on: ${{ matrix.os }}
 
     defaults:
@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest, macos-latest]
         python-version: ["3.8"]
         build-type: [Release]
 
@@ -40,7 +40,7 @@ jobs:
 
       - name: Configure cmake
         working-directory: ${{ github.workspace }}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_PREFIX_PATH=$CONDA
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
 
       - name: Build
         working-directory: ${{ github.workspace }}/build
@@ -49,3 +49,46 @@ jobs:
       - name: Test
         working-directory: ${{ github.workspace }}/build
         run: ctest -C ${{ matrix.build-type }} --output-on-failure
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.8
+          channels: conda-forge
+          channel-priority: true
+
+      - name: Show conda installation info
+        run: |
+          conda info
+
+      - name: Install build tools and dependencies into env
+        run: |
+          conda install c-compiler cmake pkg-config bmi-c
+          conda list
+
+      - name: Configure, build, and test
+        shell: cmd /C CALL {0}
+        run: |
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+
+          :: Create build directory
+          mkdir build && cd build
+
+          :: Configure
+          cmake ^
+            -LAH -G "NMake Makefiles" ^
+            -DCMAKE_INSTALL_PREFIX=%CONDA_PREFIX%\Library ^
+            -DCMAKE_BUILD_TYPE=Release ^
+            ..
+
+          :: Build
+          cmake --build . --config Release
+
+          :: Test
+          ctest --output-on-failure -C Release -V
