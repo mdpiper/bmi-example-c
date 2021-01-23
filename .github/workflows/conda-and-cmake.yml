@@ -75,7 +75,7 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+          call "%programfiles(x86)%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
           :: Create build directory
           mkdir build && cd build
