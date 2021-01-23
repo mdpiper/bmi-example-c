@@ -75,14 +75,17 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64 -vcvars_ver="15.xx"
 
           :: Create build directory
           mkdir build && cd build
 
+          set CONDA
+
           :: Configure
           cmake ^
-            -LAH -G "NMake Makefiles" ^
+            -LAH -G "Visual Studio 15 2017" ^
+            -DCMAKE_GENERATOR_PLATFORM=x64 ^
             -DCMAKE_INSTALL_PREFIX=%CONDA_PREFIX%\Library ^
             -DCMAKE_BUILD_TYPE=Release ^
             ..
