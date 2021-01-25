@@ -28,15 +28,10 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          set PATH=C:\Miniconda\envs\test\Library\bin;%PATH%
+          conda activate test
 
-          rmdir /S /Q C:\Strawberry\perl
-          rmdir /S /Q C:\Program Files\CMake
-
-          set CONDA
           where cmake
           where pkg-config
-          set PATH
 
           :: Create build directory
           mkdir build && cd build
@@ -46,6 +41,7 @@ jobs:
             -LAH -G "Visual Studio 16 2019" ^
             -DCMAKE_GENERATOR_PLATFORM=x64 ^
             -DCMAKE_INSTALL_PREFIX=%CONDA%\Library ^
+            -DPKG_CONFIG_EXECUTABLE:FILEPATH=C:/Miniconda/envs/test/Library/bin/pkg-config.exe ^
             -DCMAKE_BUILD_TYPE=Release ^
             ..
 
