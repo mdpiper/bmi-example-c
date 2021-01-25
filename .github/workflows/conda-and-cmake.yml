@@ -43,7 +43,6 @@ jobs:
           :: Configure
           cmake ^
             -LAH -G "NMake Makefiles" ^
-            -DCMAKE_GENERATOR_PLATFORM=x64 ^
             -DCMAKE_PREFIX_PATH:PATH=C:/Miniconda/envs/test/Library ^
             -DCMAKE_BUILD_TYPE=Release ^
             ..
