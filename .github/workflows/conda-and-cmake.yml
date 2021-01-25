@@ -35,7 +35,7 @@ jobs:
         run: |
           :: cmake /?
 
-          conda list
+          :: conda list
 
           :: Create build directory
           mkdir build && cd build
@@ -44,8 +44,7 @@ jobs:
           cmake ^
             -LAH -G "NMake Makefiles" ^
             -DCMAKE_GENERATOR_PLATFORM=x64 ^
-            -DCMAKE_INSTALL_PREFIX=%CONDA%\Library ^
-            -DPKG_CONFIG_EXECUTABLE:FILEPATH=C:/Miniconda/envs/test/Library/bin/pkg-config.exe ^
+            -DCMAKE_PREFIX_PATH:PATH=C:/Miniconda/envs/test/Library ^
             -DCMAKE_BUILD_TYPE=Release ^
             ..
 
