@@ -81,6 +81,8 @@ jobs:
           mkdir build && cd build
 
           set CONDA
+          where cmake
+          where pkg-config
 
           :: Configure
           cmake ^
