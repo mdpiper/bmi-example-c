@@ -33,9 +33,8 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          cmake /?
+          :: cmake /?
 
-          conda info
           conda list
 
           :: Create build directory
@@ -43,7 +42,7 @@ jobs:
 
           :: Configure
           cmake ^
-            -LAH -G "Visual Studio 16 2019" ^
+            -LAH -G "NMake Makefiles" ^
             -DCMAKE_GENERATOR_PLATFORM=x64 ^
             -DCMAKE_INSTALL_PREFIX=%CONDA%\Library ^
             -DPKG_CONFIG_EXECUTABLE:FILEPATH=C:/Miniconda/envs/test/Library/bin/pkg-config.exe ^
