@@ -33,8 +33,10 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          where cmake
-          where pkg-config
+          cmake /?
+
+          conda info
+          conda list
 
           :: Create build directory
           mkdir build && cd build
