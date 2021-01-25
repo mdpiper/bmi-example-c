@@ -33,9 +33,9 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          :: cmake /?
-
-          :: conda list
+          pushd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
+          CALL "VC\Auxiliary\Build\vcvars64.bat" -vcvars_ver=14.16 10.0.19041.0 
+          popd
 
           :: Create build directory
           mkdir build && cd build
