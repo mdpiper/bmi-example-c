@@ -25,11 +25,6 @@ jobs:
           conda install c-compiler cmake pkg-config bmi-c
           conda list
 
-      - name: Activate conda environment
-        shell: cmd /C CALL {0}
-        run: |
-          conda activate test
-
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
@@ -49,7 +44,7 @@ jobs:
             ..
 
           :: Build
-          cmake --build . --config Release
+          cmake --build . --target install --config Release
 
           :: Test
           ctest --output-on-failure -C Release -V
