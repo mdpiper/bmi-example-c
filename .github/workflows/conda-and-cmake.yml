@@ -28,11 +28,12 @@ jobs:
       - name: Configure, build, and test
         shell: cmd /C CALL {0}
         run: |
-          set PATH C:\Miniconda\envs\test\Library\bin;C:\Users\runneradmin\.conda\envs\test\Library\bin;C:\Users\runneradmin\AppData\Local\conda\conda\envs\test\Library\bin;%PATH%
+          set PATH=C:\Miniconda\envs\test\Library\bin;C:\Users\runneradmin\.conda\envs\test\Library\bin;C:\Users\runneradmin\AppData\Local\conda\conda\envs\test\Library\bin;%PATH%
 
           set CONDA
           where cmake
           where pkg-config
+          set PATH
 
           :: Create build directory
           mkdir build && cd build
