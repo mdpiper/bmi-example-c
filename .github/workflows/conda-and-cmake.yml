@@ -53,6 +53,10 @@ jobs:
   build-windows:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        shell: cmd /C CALL {0}
+
     steps:
       - uses: actions/checkout@v2
 
@@ -73,17 +77,14 @@ jobs:
           conda list
 
       - name: Configure, build, and test
-        shell: cmd /C CALL {0}
         run: |
-          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
-
-          :: Create build directory
-          mkdir build && cd build
-
           set CONDA
           where cmake
           where pkg-config
           set PATH
+
+          :: Create build directory
+          mkdir build && cd build
 
           :: Configure
           cmake ^
