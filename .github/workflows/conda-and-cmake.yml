@@ -83,6 +83,7 @@ jobs:
           set CONDA
           where cmake
           where pkg-config
+          set PATH
 
           :: Configure
           cmake ^
