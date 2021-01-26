@@ -39,7 +39,6 @@ jobs:
           :: Configure
           cmake ^
             -LAH -G "NMake Makefiles" ^
-            -DCMAKE_PREFIX_PATH:PATH=C:/Miniconda/envs/test/Library ^
             -DPKG_CONFIG_EXECUTABLE:FILEPATH=C:/Miniconda/envs/test/Library/bin/pkg-config.exe ^
             -DCMAKE_BUILD_TYPE=${{ env.build-type }} ^
             ..
